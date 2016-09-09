@@ -7,6 +7,7 @@ export random
 @inline random(T, n::Integer) = T[random(T) for _ in 1:n]
 @inline random{T}(::Type{Vector{T}}; l::Integer=rand(0:20)) = random(T,l)
 @inline random{T <: Number}(::Type{T}) = rand(T)
+random{K,V}(D::Type{Dict{K,V}}) = D(random(Vector{Tuple{K, V}}))
 
 function random_from_fields_impl{T}(::Type{T})
     fieldtypes = T.types

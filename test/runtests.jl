@@ -18,7 +18,7 @@ end
 
 
 @testset "Test random(T)::T" begin
-    for T in [Int, String, A, B, C{Int}]
+    for T in [Int, String, A, B, C{Int}, Dict{Int, String}]
         n = rand(0:5)
         @test typeof(@inferred random(T)) == T
         @test length(@inferred random(T, n)) == n
