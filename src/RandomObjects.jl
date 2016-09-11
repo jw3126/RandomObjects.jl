@@ -4,9 +4,9 @@ module RandomObjects
 export random
 
 @inline random(::Type{String}; l::Integer=rand(2:10)) = randstring(l)
-@inline random(T, n::Integer) = T[random(T) for _ in 1:n]
+@inline random(T, n::Int) = T[random(T) for _ in 1:n]
 random(T, dims::Dims) = reshape(random(T, prod(dims)), dims)
-random(T, dims::Dims...) = random(T, dims)
+random(T, dims::Int...) = random(T, dims)
 
 @inline random{T}(::Type{Vector{T}}; l::Integer=rand(0:20)) = random(T,l)
 @inline random{T <: Number}(::Type{T}) = rand(T)
