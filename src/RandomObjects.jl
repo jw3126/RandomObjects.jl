@@ -5,9 +5,17 @@ export random
 
 @inline random(::Type{String}; l::Integer=rand(2:10)) = randstring(l)
 @inline random(T, n::Integer) = T[random(T) for _ in 1:n]
+random(T, dims::Dims) = reshape(random(T, prod(dims)), dims)
+random(T, dims::Dims...) = random(T, dims)
+
 @inline random{T}(::Type{Vector{T}}; l::Integer=rand(0:20)) = random(T,l)
 @inline random{T <: Number}(::Type{T}) = rand(T)
 random{K,V}(D::Type{Dict{K,V}}) = D(random(Vector{Tuple{K, V}}))
+
+function random{T, n}(::Type{Array{T, n}})
+    dims = tuple(rand(1:10, n)...) :: NTuple{n, Int}
+    random(T, dims)
+end
 
 function random_from_fields_impl{T}(::Type{T})
     fieldtypes = T.types
